@@ -1,0 +1,11 @@
+<head>
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@FloatBoat" />
+  <meta name="twitter:title" content="{{user.username}}" />
+  <meta name="twitter:description" content="{{user.role|title}} on {{config.site_name}}!" />
+  <meta name="twitter:image" content="http://159.65.52.242:8080/api/v1/avatar?userID={{user.userID}}" /> 
+  <meta name="theme-color" content="{{config.site_colour}}">
+</head>
+<body>
+  <img src='/api/v1/avatar?userID={{user.userID}}'/>
+</body>

@@ -1,0 +1,73 @@
+{% extends './imports.html' %}
+{% block content %}
+<style>
+  /* Some custom styling for this page only */
+  .avatar_select:hover {
+    background:lightgrey;
+  }
+</style>
+<section class="hero is-dark is-medium">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Welcome to FloatBoat
+      </h1>
+      <h2 class="subtitle">
+        A python-powered self-hosted video platform made for you!<br />
+        This page will get you started on what you need to make this thing work!<br /><br/>
+        First we have to ask you to set up an admin account!
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class=''>
+  <form method='post' enctype='multipart/form-data'>
+    <div class="field">
+      <label class="label">Admin Username</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="Username" name='username' value='Admin'/>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Admin Password</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="Password" name='password' value='password'/>
+      </div>
+    </div>
+    <input name='avatar' id='avatarID' value='001-man-13.png' hidden />
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link">Submit</button>
+      </div>
+    </div>
+  </form>
+</section>
+<h2>
+  Select a avatar - Check out <b>/users/default_avatars</b> if you wish to add your own
+</h2>
+<br />
+<div class='columns is-multiline'>
+  {% for img in avatars %}
+  <div class='column is-1 avatar_select' data-id="{{img}}" id="avatar_{{img}}">
+    <img src='/api/v1/default_avatar?id={{img}}'/>
+  </div>  
+  {% endfor %}
+  <p>
+    Avatars from <a href='https://creativemarket.com/monkik'>monkik</a>
+  </p>
+</div>
+<script>
+$('.avatar_select').click(function () {
+  if (window.avatar) {
+    // avatar image already picked
+    // we need to toggle it
+    $('#avatar_' + window.avatar).css('background', '');
+    
+  }
+  $(this).css('background', 'hsl(141, 71%, 48%)');
+  window.avatar = $(this).attr('data-id');
+  $('#avatarID').attr('value', $(this).attr('data-id'))
+})
+</script>
+{% endblock %}

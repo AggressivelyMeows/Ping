@@ -1,0 +1,12 @@
+{"mongodb_location": "localhost",
+ "allow_setup": false,
+ "allow_avatar_uploads": true,
+ "allow_signups": true,
+ "signup_default_role": "viewer",
+ "allow_uploads":true,
+ "site_name": "Ping",
+ "site_colour": "#3273dc",
+ "rendering": {
+   "doc": "This is the area where you can config the render engine",
+   "use_codec": "h264"
+ }}

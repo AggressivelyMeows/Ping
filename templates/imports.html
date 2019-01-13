@@ -1,0 +1,116 @@
+<head>
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css' rel="stylesheet"/>
+  <link href='/cdn/ui.css' rel='stylesheet'/>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://vjs.zencdn.net/5.19.2/video-js.css" rel="stylesheet"><!-- https://videojs.com -->
+  <link href='/cdn/css/videojs-http-source-selector.css' rel='stylesheet'/>
+  <link href='https://cdn.jsdelivr.net/npm/videojs-sublime-skin@1.0.3/dist/videojs-sublime-skin.min.css' rel='stylesheet'>
+  {% block head %}
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Ping" />
+  <meta name="twitter:title" content="{{config.site_name}}" />
+  <meta name="twitter:description" content="{{config.site_name}} a video platform created on Ping!" />
+  <meta name="twitter:image" content="http://159.65.52.242:8080/cdn/streaming.png" /> 
+  <meta name="theme-color" content="{{config.site_colour}}">
+  {% endblock %}
+  <style type="text/css">
+      .video-js {
+          font-size: 1rem;
+      }
+    
+    .navbar {
+      border-top:6px {{config.site_colour}} solid;
+      border-bottom:1px #eee solid;
+      /*margin-bottom:1em;*/
+    }
+  </style>  
+</head>
+<body>
+  
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class='container'>
+      <div class="navbar-brand">
+        <a class='navbar-item' style='font-size:1.3em' href='/'>
+          <img src='/cdn/logo_black.png' style='margin-right:0.5em;'/>
+          {{config.site_name}}
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class='navbar-item'>Videos</a>
+        </div>
+
+        <div class="navbar-end">
+          {% if session.user %}
+          <div class="navbar-item has-dropdown">
+            <a class="navbar-link">
+            {{session.user.username}}
+            <img src='/api/v1/avatar?userID={{session.user.userID}}'/>              
+            </a>
+
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" href='/dashboard'>
+                Dashboard
+              </a>
+              {% if session.user.permissions.allow_upload %}
+              <a class="navbar-item" href='/videos/upload'>
+                Upload
+              </a>
+              {% endif %}
+              <hr class="navbar-divider">
+              <div class="navbar-item">
+                Version 0.2A
+              </div>
+            </div>
+          </div>    
+          <a class='navbar-item' href='/logout'>Logout</a>
+          {% else %}
+          <a class='navbar-item' href='/login'>Login</a>
+          <a class='navbar-item' href='/signup'>Signup</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>    
+  {% if not no_padding %}
+  <br />
+  
+  <div id='content' style='display:flex;align-items:center;justify-content:center;'>
+    <div class='' style='padding:10px;'>  
+  {% else %}
+  <div id='content'>
+    <div class=''>
+  {% endif %}
+      
+    {% block content %}
+    {% endblock %}
+    </div>
+  </div>
+<br /><br /><br /><br /><br />
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+      powered by <a href=''>Ping</a>
+      </p>
+    </div>
+  </div>
+</footer>
+  
+  
+  <script>
+    $(document).ready(function () {
+      $('a').each( function (index, elm,) {
+        if ($(elm).attr('href') == window.location.pathname) {
+            $(elm).addClass('is-active')
+        }
+      })
+      $('.has-dropdown').hover(function () {$(this).addClass('is-active');}, function () {$(this).removeClass('is-active')})
+      $('.has-dropdown').click(function () {
+        $(this).toggleClass('is-active')
+      })
+    })
+  </script>
+</body>

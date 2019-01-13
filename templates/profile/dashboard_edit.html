@@ -1,0 +1,63 @@
+{% extends './imports.html' %}
+{% block content %}
+<style>
+  /* Some custom styling for this page only */
+  .avatar_select:hover {
+    background:lightgrey;
+  }
+</style>
+<div style=''>
+  <form enctype='multipart/form-data' method='post'>
+    <div class="field">
+      <label class="label">Username / Profile URL</label>
+      <div class="control">
+        <input class='input' name='username' value='{{session.user.username}}'/>
+      </div>
+    </div>
+    
+    <div class="notification is-danger">
+      Changing your username will change the url in your profile. If you do change your name, please make any changes to shared links.
+    </div>
+    <input name='avatar' id='avatarID' hidden value='{{session.user.default_avatar}}' />
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link">Update {{session.user.username}}</button>
+      </div>
+      <div class="control">
+        <button class="button is-text">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
+<h2>
+  Select a default avatar
+</h2>
+<p>
+  If you have an uploaded avatar, that will be shown before your default avatar.
+</p>
+<br />
+<div class='columns is-multiline' style='max-width:870px;'>
+  {% for img in avatars %}
+  <div class='column is-1 avatar_select' data-id="{{img}}" id="avatar_{{img}}" {% if session['user'].default_avatar == img %}style="background:hsl(141, 71%, 48%)"{% endif %}>
+    <img src='/api/v1/default_avatar?id={{img}}'/>
+  </div>  
+  {% endfor %}
+  <p>
+    Avatars from <a href='https://creativemarket.com/monkik'>monkik</a>
+  </p>
+</div>
+<script>
+  window.avatar = "{{session['user'].default_avatar}}"
+$('.avatar_select').click(function () {
+  if (window.avatar) {
+    // avatar image already picked
+    // we need to toggle it
+    $('#avatar_' + window.avatar).css('background', '');
+    
+  }
+  $(this).css('background', 'hsl(141, 71%, 48%)');
+  window.avatar = $(this).attr('data-id');
+  $('#avatarID').attr('value', $(this).attr('data-id'))
+})
+</script>
+{% endblock %}

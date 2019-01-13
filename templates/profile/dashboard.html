@@ -1,0 +1,108 @@
+{% extends './imports.html' %}
+{% block content %}
+<style>
+
+</style>
+<div>
+  <div class='wide_container columns'>
+    <div class='column is-3'>
+      <div class="card" style='border-top:6px {{config.site_colour}} solid;padding-top:5px;'>
+        <div class="card-image">
+          <figure class="image is-1by1">
+            <img src="/api/v1/avatar?userID={{session['user']['userID']}}" alt="Avatar">
+          </figure>
+        </div>
+        <div class="card-content" style='padding:1em;'>
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">{{session['user']['username']}}</p>
+              <p class="subtitle is-6">Role: <b>{{session['user'].role|title}}</b></p>
+            </div>
+          </div>
+          <div class="content">
+            <div class="buttons has-addons is-centered">
+              <a class="button is-info" href='/dashboard/edit'>Edit Your Account</a>
+            </div>           
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='column'>
+      <nav class="level">
+        <!-- Left side -->
+        <div class="level-left">
+          <div class="level-item">
+            <p class="subtitle is-5">
+              <strong>{{videos|length}}</strong> videos
+            </p>
+          </div>
+          <div class="level-item">
+            <div class="field has-addons">
+              <p class="control">
+                <input class="input" type="text" placeholder="Find video">
+              </p>
+              <p class="control">
+                <button class="button">
+                  Search
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right side -->
+        <div class="level-right">
+          <p class="level-item"><a class="button is-success" href='/videos/upload'>New Video</a></p>
+        </div>
+      </nav>
+    <!-- INSERT VIDEOS HERE -->
+    {% if videos %}
+      {% for video in videos %}
+      <div class='box'>
+        <article class="media">
+          <figure class="media-left"  onclick='window.location = "/watch/{{video.videoID}}"'>
+            <p class="image" style=''>
+              <img style='height:76px;width:auto;' src="/api/v1/video/{{video.videoID}}/thumbnail">
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <p>
+                {% if video.status != 'published'%}<span class="tag is-warning">{{video.status|title}}</span>{% endif %} <strong  onclick='window.location = "/watch/{{video.videoID}}"'>{{video.title}}</strong>
+                <br>
+                {{video.description}}
+              </p>
+            </div>
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <a class="level-item">
+                  <span class="icon is-small"><i class="fas fa-info"></i></span>
+                </a>                
+                <a class="level-item">
+                  <span class="icon is-small"><i class="fas fa-pencil-alt"></i></span>
+                </a>
+                <a class="level-item" href='/api/v1/video/{{video.videoID}}/delete'>
+                  <span class="icon is-small"><i class="fas fa-trash"></i></span>
+                </a>
+              </div>
+            </nav>
+          </div>
+        </article>
+        <div>
+          <p>
+            Views: {{video.views|length}}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+    <h1 style='text-align:center;'>
+      No videos. Sorry!
+    </h1>
+    {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

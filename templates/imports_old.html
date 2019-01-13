@@ -1,0 +1,76 @@
+<head>
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css' rel="stylesheet"/>
+  <link href='/cdn/ui.css' rel='stylesheet'/>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://vjs.zencdn.net/5.19.2/video-js.css" rel="stylesheet"><!-- https://videojs.com -->
+  <link href='/cdn/css/videojs-http-source-selector.css' rel='stylesheet'/>
+  <style type="text/css">
+      .video-js {
+          font-size: 1rem;
+      }
+  </style>  
+</head>
+<body>
+  <div class="page columns">
+    <div class="column is-2" style='/*border-right:1px #444 solid;*/'>
+      <!-- NAV BAR -->
+      <aside class="menu" id='full_menu'>
+        <p class="menu-label">
+          {{config.site_name}}
+        </p>
+        <ul class="menu-list">
+          
+          <li><a href='/'>Home</a></li>
+          <li><a>Videos</a></li>
+          {% if session.user %}
+          <li><a>Logout</a></li>
+          {% else %}
+          <li><a href='/login'>Login</a></li>
+          {% endif %}
+          <li><a>Hide This</a></li>
+        </ul>
+        
+        {% if session.get('user') %}
+        {% with user = session['user'] %}
+        <p class="menu-label">
+          
+          Hello, {{user.username}} 
+        </p>
+        <ul class="menu-list">
+          <li><a href='/dashboard'>Dashboard</a></li>
+          {% if user['permissions']['allow_upload'] %}
+          <li><a href='/videos/upload'>Upload</a></li>
+          {% endif %}
+          
+          {% if user['permissions']['edit_users'] %}
+          <li><a>Edit user</a></li>
+          {% endif %}
+          {% if user.role == 'owner' %}
+          <!-- User is the owner of the site -->
+          <li><a href='/admin/config'>Site Config</a></li>
+          {% endif %}
+        </ul>
+        {% endwith %}
+        {% endif %}
+      </aside>
+    </div>
+    <div class="column" style='height:100%;'>
+      <div id='content' class="container">
+        {% block content %}
+
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+  <script>
+  $(document).ready(function () {
+    $('a').each( function (index, elm,) {
+      if ($(elm).attr('href') == window.location.pathname) {
+          $(elm).addClass('is-active')
+      }
+    })
+  })
+  </script>
+</body>

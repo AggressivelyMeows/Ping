@@ -1,0 +1,65 @@
+{% extends './imports.html' %}
+{% block content %}
+
+  
+<div style='width:770px;'>
+  {% if error %}
+  <div class="notification is-danger">
+    {{error}}
+  </div>
+  {% endif %}
+  <form  method="post" enctype='multipart/form-data'>
+  <div class="field" id='username_field'>
+    <label class="label">Username</label>
+    <div class="control has-icons-left has-icons-right">
+      <input class="input" type="text" id='username' placeholder="Username" value="" autocomplete="off" name='username' />
+    </div>
+    <p class="help is-success"></p>
+  </div>
+    
+  <div class="field" id='username_field'>
+    <label class="label">Password</label>
+    <div class="control has-icons-left has-icons-right">
+      <input class="input" type="password" id='pass' placeholder="Password" value="" autocomplete="off" name='password' />
+    </div>
+    <p class="help is-success"></p>
+  </div>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox">
+        <input type="checkbox">
+        I agree to the <a href="#">terms and conditions</a>
+      </label>
+    </div>
+  </div>
+
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link">Create user!</button>
+    </div>
+    <div class="control">
+      <button class="button is-text">Cancel</button>
+    </div>
+  </div>
+</form>
+</div>
+<script>
+$(document).ready(function () {
+  
+  
+  $('#username').bind('input', function(){
+    $.ajax({url: '/api/v1/auth/check_username?username=' + $(this).val()}).done(function (resp) {
+      if (resp['result']) {
+        // is true
+        $('#username_field').find('p').attr('class', 'help is-danger')
+        $('#username_field').find('p').text('Username taken')
+      }
+      else {
+        $('#username_field').find('p').attr('class', 'help is-success')
+        $('#username_field').find('p').text('Username is not taken')        
+      }
+    })
+  });
+})
+</script>
+{% endblock %}

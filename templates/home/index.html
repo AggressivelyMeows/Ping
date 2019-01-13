@@ -1,0 +1,50 @@
+{% extends './imports.html' %}
+{% block content %}
+<style>
+  .index_column {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-flow:column;
+  }
+</style>
+<section class="hero is-large" style='width:100%;background-image: linear-gradient(to left bottom, #3273dc, #4571d9, #546fd6, #606dd3, #6a6bd0);'>
+  <div class="hero-body" style='padding:0;height:28rem'>
+    <div class="container">
+      <div class='columns' style='height:100%;'>
+        <div class='index_column column' style=''>
+          <div>
+          <h1 class="title" style='color:white'>
+            {{config.site_name}}
+          </h1>
+          <h2 class="subtitle" style='color:lightgrey'>
+            Powered By FloatBoat
+          </h2>             
+          </div>
+         
+        </div>
+        <div class='index_column column' style=''>
+          <img style='width:150px;height:auto' src='/cdn/streaming.png'/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div style='width:100%;height:2px;background:#eee;'>
+  
+</div>
+<section class="hero is-medium has-text-centered" data-v-f481c9b2="">
+  <div class="hero-body" data-v-f481c9b2="">
+    <div class="container" data-v-f481c9b2="">
+      <img src="" alt="" class="hero-icon" data-v-f481c9b2="" width="38px">
+      <h2 class="title is-3 has-text-weight-bold" data-v-f481c9b2="">
+          Open-source, hyper-editable, video platform
+      </h2>
+      <p class="is-big" data-v-f481c9b2="" style="max-width:600px;margin:0 auto">
+          FloatBoat is built on Python using the same tech as Node.js meaning it is just as fast, if not faster! Using Python also means its very easy to understand and use!
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

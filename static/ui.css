@@ -1,0 +1,34 @@
+.page {
+  margin:1em;
+}
+#container {
+  width:100%;
+}
+.mediumcontainer {
+  /* Bulma has a weird bug where the column length is longer than the screen */
+  max-width:770px;
+}
+
+.divider {
+  width:100%;height:2px;background:#eee;
+  margin-top:0.5em;
+  margin-bottom:0.5em;
+}
+
+.wide_container {
+  width:990px;
+}
+@media only screen and (max-width:1000px) {
+  .wide_container {
+    width:100%;
+  }
+}  
+
+@media only screen and (max-width:750px) {
+  #floatboat-index-img {
+    display:none;
+  }
+  .index_column {
+    height:50%;
+  }
+}

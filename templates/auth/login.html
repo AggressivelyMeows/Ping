@@ -1,0 +1,37 @@
+{% extends './imports.html' %}
+{% block content %}
+
+  
+<div style='width:770px;'>
+  {% if error %}
+  <div class="notification is-danger">
+    {{error}}
+  </div>  
+  {% endif %}
+  <form method="post" enctype="multipart/form-data">
+  <div class="field" id='username_field'>
+    <label class="label">Username</label>
+    <div class="control">
+      <input class="input" type="text" id='username' placeholder="Username" value="" autocomplete="off" name='username' />
+    </div>
+    <p class="help is-success"></p>
+  </div>
+    
+  <div class="field" id='username_field'>
+    <label class="label">Password</label>
+    <div class="control">
+      <input class="input" type="password" id='pass' placeholder="Password" value="" autocomplete="off" name='password' />
+    </div>
+    <p class="help is-success"></p>
+  </div>
+
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link">Login</button>
+    </div>
+  </div>
+</form>
+</div>
+<script>
+</script>
+{% endblock %}
